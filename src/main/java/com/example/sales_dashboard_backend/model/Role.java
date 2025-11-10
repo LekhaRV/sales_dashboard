@@ -1,20 +1,27 @@
 package com.example.sales_dashboard_backend.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
-    @Id@GeneratedValue
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seq")
+    @SequenceGenerator(name = "role_seq", sequenceName = "role_seq", allocationSize = 1)
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
     private RoleName name;
 
-    public enum RoleName{
+    public enum RoleName {
         REP, MANAGER, EXECUTIVE
     }
-
 }
+
